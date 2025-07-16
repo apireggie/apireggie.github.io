@@ -13,7 +13,7 @@ class APIReggieCanvasApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false, //?
       theme: ThemeData.dark(useMaterial3: true),
       home: RepositoryProvider(
           create: (_) => CanvasRepository(), child: Container()),

@@ -1,25 +1,24 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'dart:html' show document;
-
 import 'canvas_repository.dart';
 
-final canvasToken = dotenv.env['CANVAS_TOKEN'];
-final openAiKey = dotenv.env['OPENAI_API_KEY'];
-
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  String canvasToken;
+  String openAiKey;
+
   if (kIsWeb) {
-    await dotenv.load(fileName: ".env");
+    canvasToken = const String.fromEnvironment('CANVAS_TOKEN');
+    openAiKey = const String.fromEnvironment('OPENAI_API_KEY');
+  } else {
+    // Load dotenv if needed for non-web (left blank intentionally)
+    canvasToken = '';
+    openAiKey = '';
   }
 
   runApp(const APIReggieCanvasApp());
-
-  Future.delayed(const Duration(milliseconds: 300), () {
-    final loader = document.getElementById('loading-screen');
-    loader?.remove();
-  });
 }
 
 class APIReggieCanvasApp extends StatelessWidget {

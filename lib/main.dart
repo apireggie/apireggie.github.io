@@ -7,8 +7,8 @@ import 'canvas_repository.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final canvasKey = dotenv.env['CANVAS_API_KEY'];
-  final openAiKey = dotenv.env['OPENAI_API_KEY'];
+  const openAiKey = String.fromEnvironment('OPENAI_API_KEY');
+  const canvasApiKey = String.fromEnvironment('CANVAS_API_KEY');
 
   runApp(const APIReggieCanvasApp());
 }

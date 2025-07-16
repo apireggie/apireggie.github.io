@@ -187,7 +187,7 @@ class _CanvasHomePageState extends State<CanvasHomePage>
               }
             },
             tabs: const [
-              Tab(text: 'Courses', icon: Icon(Icons.school)),
+              Tab(text: 'Coursess', icon: Icon(Icons.school)),
               Tab(text: 'Announcements', icon: Icon(Icons.campaign)),
             ],
           ),

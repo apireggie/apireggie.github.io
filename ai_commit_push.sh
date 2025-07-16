@@ -1,46 +1,43 @@
 #!/bin/bash
 
+set -e
+
 # Load environment variables
 if [ -f .env ]; then
+  set -a
   source .env
+  set +a
 else
-  echo "❌ .env file not found!"
+  echo "⚠️ .env file not found."
   exit 1
 fi
 
-# Set Git identity
-git config user.name "$GIT_COMMIT_USER"
-git config user.email "$GIT_COMMIT_EMAIL"
-
-echo "🔄 Running flutter pub get..."
-flutter pub get || { echo "❌ flutter pub get failed"; exit 1; }
-
+# Build Flutter Web
 echo "🔨 Building Flutter Web..."
-flutter build web --release || { echo "❌ Flutter build failed"; exit 1; }
+flutter build web --release --base-href="/"
 
-# Check for changes
-if [ -n "$(git status --porcelain)" ]; then
-  echo "📝 Committing changes..."
-  git add .
-  COMMIT_MSG="Update: minor changes in AppRegin Suite"
-  
-  # Optional: Generate commit message with OpenAI
-  if [ -n "$OPENAI_API_KEY" ]; then
-    DIFF=$(git diff --cached)
-    COMMIT_MSG=$(curl -s https://api.openai.com/v1/chat/completions \
-      -H "Authorization: Bearer $OPENAI_API_KEY" \
-      -H "Content-Type: application/json" \
-      -d '{
-        "model": "gpt-4o",
-        "messages": [{"role": "user", "content": "Write a Git commit message for the following diff:\n'"$DIFF"'"}],
-        "max_tokens": 30
-      }' | jq -r '.choices[0].message.content' | tr -d '\n')
-  fi
+# Get AI commit message or fallback
+echo "💬 Consulting AhShay OS for commit message..."
+DIFF=$(git diff HEAD)
 
-  git commit -m "$COMMIT_MSG"
-  
-  echo "🚀 Pushing to origin/main..."
-  git push origin main
-else
-  echo "🧘‍♂️ No changes to commit."
+MESSAGE=$(curl -s https://api.openai.com/v1/chat/completions \
+  -H "Authorization: Bearer $OPENAI_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "gpt-4o",
+    "messages": [{"role": "user", "content": "Write a short git commit message summarizing:\n'"$DIFF"'"}],
+    "max_tokens": 60
+  }' | jq -r '.choices[0].message.content')
+
+if [ -z "$MESSAGE" ] || [ "$MESSAGE" = "null" ]; then
+  MESSAGE="🚀 Auto-commit: minor update"
 fi
+
+echo "📝 Committing with message: $MESSAGE"
+
+# Git commands
+git add .
+git commit -m "$MESSAGE"
+git push origin main
+
+echo "✅ Deploy complete."

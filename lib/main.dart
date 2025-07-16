@@ -4,7 +4,6 @@ import 'canvas_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   runApp(const APIReggieCanvasApp());
 }
 

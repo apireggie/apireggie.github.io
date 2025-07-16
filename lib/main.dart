@@ -22,9 +22,7 @@ class APIReggieCanvasApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(useMaterial3: true),
       home: RepositoryProvider(
-        create: (_) => CanvasRepository(),
-        child: const Placeholder(), // Replace with actual UI widget
-      ),
+          create: (_) => CanvasRepository(), child: const Placeholder()),
     );
   }
 }

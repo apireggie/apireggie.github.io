@@ -1,8 +1,6 @@
 #!/bin/bash
-
 set -e
 
-# Load environment variables
 if [ -f .env ]; then
   set -a
   source .env
@@ -12,23 +10,19 @@ else
   exit 1
 fi
 
-# Check for changes before building
 if git diff --quiet && git diff --cached --quiet; then
   echo "🧘‍♂️ No changes detected. Skipping build and push."
   exit 0
 fi
 
-# Build Flutter Web faster
-echo "🔨 Building Flutter Web (release, no tree shake icons)..."
+echo "🔨 Building Flutter Web..."
 flutter build web --release --base-href="/" --no-tree-shake-icons
 
-# Write CNAME if defined
 if [ -n "$CNAME_DOMAIN" ]; then
   echo "$CNAME_DOMAIN" > build/web/CNAME
   echo "🌐 CNAME set to: $CNAME_DOMAIN"
 fi
 
-# Generate commit message if needed
 echo "💬 Consulting AhShay OS for commit message..."
 DIFF=$(git diff HEAD)
 
@@ -46,10 +40,7 @@ if [ -z "$MESSAGE" ] || [ "$MESSAGE" = "null" ]; then
 fi
 
 echo "📝 Committing with message: $MESSAGE"
-
-# Git deploy
 git add .
 git commit -m "$MESSAGE" || echo "✅ Nothing to commit."
 git push origin main
-
 echo "✅ Deploy complete."

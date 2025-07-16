@@ -1,7 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'dart:html';
+import 'dart:html' show document;
 
 import 'canvas_repository.dart';
 
@@ -9,7 +10,10 @@ final canvasToken = dotenv.env['CANVAS_TOKEN'];
 final openAiKey = dotenv.env['OPENAI_API_KEY'];
 
 void main() async {
-  await dotenv.load(fileName: ".env");
+  if (kIsWeb) {
+    await dotenv.load(fileName: ".env");
+  }
+
   runApp(const APIReggieCanvasApp());
 
   Future.delayed(const Duration(milliseconds: 300), () {

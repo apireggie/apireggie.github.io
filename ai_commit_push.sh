@@ -16,7 +16,7 @@ if git diff --quiet && git diff --cached --quiet; then
 fi
 
 echo "🔨 Building Flutter Web..."
-flutter build web --release --base-href="/" --no-tree-shake-icons
+flutter build web --release --dart-define=OPENAI_API_KEY=$OPENAI_API_KEY --base-href="/" --no-tree-shake-icons
 
 if [ -n "$CNAME_DOMAIN" ]; then
   echo "$CNAME_DOMAIN" > build/web/CNAME

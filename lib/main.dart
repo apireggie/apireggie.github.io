@@ -1,22 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'canvas_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  String canvasToken;
-  String openAiKey;
-
-  if (kIsWeb) {
-    canvasToken = const String.fromEnvironment('CANVAS_TOKEN');
-    openAiKey = const String.fromEnvironment('OPENAI_API_KEY');
-  } else {
-    // Load dotenv if needed for non-web (left blank intentionally)
-    canvasToken = '';
-    openAiKey = '';
-  }
+  final canvasKey = dotenv.env['CANVAS_API_KEY'];
+  final openAiKey = dotenv.env['OPENAI_API_KEY'];
 
   runApp(const APIReggieCanvasApp());
 }

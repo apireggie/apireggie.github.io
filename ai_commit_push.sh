@@ -16,28 +16,20 @@ if git diff --quiet && git diff --cached --quiet; then
 fi
 
 echo "🔨 Building Flutter Web..."
-flutter build web --release --dart-define=OPENAI_API_KEY=$OPENAI_API_KEY --base-href="/" --no-tree-shake-icons
+flutter build web --release \
+  --dart-define=OPENAI_API_KEY=$OPENAI_API_KEY \
+  --base-href="/" --no-tree-shake-icons
 
-if [ -n "$CNAME_DOMAIN" ]; then
-  echo "$CNAME_DOMAIN" > build/web/CNAME
-  echo "🌐 CNAME set to: $CNAME_DOMAIN"
-fi
+[ -n "$CNAME_DOMAIN" ] && echo "$CNAME_DOMAIN" > build/web/CNAME && echo "🌐 CNAME set to: $CNAME_DOMAIN"
 
 echo "💬 Consulting AhShay OS for commit message..."
 DIFF=$(git diff HEAD)
-
 MESSAGE=$(curl -s https://api.openai.com/v1/chat/completions \
   -H "Authorization: Bearer $OPENAI_API_KEY" \
   -H "Content-Type: application/json" \
-  -d '{
-    "model": "gpt-4o",
-    "messages": [{"role": "user", "content": "Write a short git commit message summarizing:\n'"$DIFF"'"}],
-    "max_tokens": 60
-  }' | jq -r '.choices[0].message.content')
+  -d '{"model": "gpt-4o", "messages": [{"role": "user", "content": "Write a short git commit message summarizing:\n'"$DIFF"'"}], "max_tokens": 60}' | jq -r '.choices[0].message.content')
 
-if [ -z "$MESSAGE" ] || [ "$MESSAGE" = "null" ]; then
-  MESSAGE="🚀 Auto-commit: minor update"
-fi
+[ -z "$MESSAGE" ] || [ "$MESSAGE" = "null" ] && MESSAGE="🚀 Auto-commit: minor update"
 
 echo "📝 Committing with message: $MESSAGE"
 git add .

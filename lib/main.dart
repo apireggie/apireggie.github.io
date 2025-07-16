@@ -4,11 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'canvas_repository.dart';
 
+const openAiKey = String.fromEnvironment('OPENAI_API_KEY');
+const canvasApiKey = String.fromEnvironment('CANVAS_API_KEY');
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  const openAiKey = String.fromEnvironment('OPENAI_API_KEY');
-  const canvasApiKey = String.fromEnvironment('CANVAS_API_KEY');
 
   runApp(const APIReggieCanvasApp());
 }

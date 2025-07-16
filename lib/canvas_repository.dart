@@ -5,7 +5,7 @@ import 'models.dart';
 
 class CanvasRepository {
   // These will be replaced at build time with --dart-define
-  static const String canvasToken = String.fromEnvironment('CANVAS_TOKEN');
+  static const String canvasToken = String.fromEnvironment('CANVAS_API_KEY');
   static const String baseUrl = 'https://us-sae.instructure.com/api/v1';
 
   Map<String, String> get _headers => {

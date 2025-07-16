@@ -1,0 +1,52 @@
+name: appregin_suite
+description: AppRegin API Suite – iOS-first AI + API platform
+version: 0.0.1
+publish_to: "none"
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # 🌐 Essentials
+  http: ^1.1.0
+  shared_preferences: ^2.2.2
+  js: ^0.6.7
+  cupertino_icons: ^1.0.6
+
+  # 🧠 State Management
+  provider: ^6.0.5
+  flutter_bloc: ^9.1.1
+  v: ^0.0.0-origin.0.1
+  flutter_hooks: ^0.21.2
+  flutter_dotenv: ^5.2.1
+
+  # 🔥 Firebase (optional for later)
+  # firebase_core: ^2.30.0
+  # firebase_core_web: ^2.14.0
+  # firebase_auth: ^4.17.4
+  # firebase_auth_web: ^5.8.13
+  # google_sign_in: ^6.1.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/images/brick_wall.jpg
+    - assets/images/me.jpg
+
+  fonts:
+    - family: NotoSans
+      fonts:
+        - asset: assets/fonts/NotoSans-Regular.ttf
+    - family: NotoEmoji
+      fonts:
+        - asset: assets/fonts/NotoEmoji-Regular.ttf

@@ -1,0 +1,19 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "Dart-Code.dart-code",
+  "dart.flutterHotReloadOnSave": "all",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "always"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "emeraldwalk.runonsave": {
+    "commands": [
+      {
+        "match": ".*\\.dart$",
+        "cmd": "./auto_pipeline.sh"
+      }
+    ]
+  }
+}

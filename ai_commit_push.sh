@@ -18,6 +18,7 @@ fi
 echo "🔨 Building Flutter Web..."
 flutter build web --release \
   --dart-define=OPENAI_API_KEY=$OPENAI_API_KEY \
+  --dart-define=CANVAS_API_KEY=$CANVAS_API_KEY \
   --base-href="/" --no-tree-shake-icons
 
 [ -n "$CNAME_DOMAIN" ] && echo "$CNAME_DOMAIN" > build/web/CNAME && echo "🌐 CNAME set to: $CNAME_DOMAIN"

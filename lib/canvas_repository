@@ -1,0 +1,46 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+class CanvasRepository {
+  final String _base = 'https://us-sae.instructure.com/api/v1';
+  late final String canvasToken;
+
+  CanvasRepository() {
+    canvasToken = dotenv.env['CANVAS_TOKEN']?.trim() ?? '';
+    if (canvasToken.isEmpty) {
+      print("⚠️ No Canvas token detected from .env. Check dotenv setup.");
+    } else {
+      print("✅ Canvas token loaded: ${canvasToken.substring(0, 5)}...");
+    }
+  }
+
+  Map<String, String> get _headers => {
+        'Authorization': 'Bearer $canvasToken',
+        'Content-Type': 'application/json',
+      };
+
+  Future<List<Course>> fetchCourses() async {
+    final res = await http.get(Uri.parse('$_base/courses'), headers: _headers);
+    print("Fetch courses status: ${res.statusCode}");
+    if (res.statusCode != 200) throw Exception('Courses request failed.');
+    return (jsonDecode(res.body) as List)
+        .map((e) => Course.fromJson(e))
+        .toList();
+  }
+
+  Future<List<Announcement>> fetchAnnouncements(List<String> ctx) async {
+    final uri = Uri.parse('$_base/announcements').replace(
+      queryParameters: {
+        'context_codes[]': ctx,
+        'active_only': 'true',
+      },
+    );
+    final res = await http.get(uri, headers: _headers);
+    print("Fetch announcements status: ${res.statusCode}");
+    if (res.statusCode != 200) throw Exception('Announcements request failed.');
+    return (jsonDecode(res.body) as List)
+        .map((e) => Announcement.fromJson(e))
+        .toList();
+  }
+}

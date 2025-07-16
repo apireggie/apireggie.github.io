@@ -42,3 +42,11 @@ flutter:
   assets:
     - assets/images/brick_wall.jpg
     - assets/images/me.jpg
+
+  fonts:
+    - family: NotoSans
+      fonts:
+        - asset: assets/fonts/NotoSans-Regular.ttf
+    - family: NotoEmoji
+      fonts:
+        - asset: assets/fonts/NotoEmoji-Regular.ttf

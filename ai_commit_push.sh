@@ -34,7 +34,7 @@ fi
 # Build
 echo -e "${YELLOW}🔨 Building Flutter Web with CSP...${NC}"
 FLUTTER_WEB_RENDERER=canvaskit flutter build web --release --csp
-
+ 
 # Set CNAME
 if [ -n "$CNAME_DOMAIN" ]; then
   echo "$CNAME_DOMAIN" > build/web/CNAME

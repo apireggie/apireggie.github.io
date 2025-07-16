@@ -1,3 +1,4 @@
+import 'package:apireggie_suite/daw.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'canvas_repository.dart';
@@ -13,13 +14,11 @@ class APIReggieCanvasApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark(useMaterial3: true),
-      home: RepositoryProvider(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData.dark(useMaterial3: true),
+        home: RepositoryProvider(
           create: (_) => CanvasRepository(),
-          child: Container(
-            child: const Text("AT YOUR DOME!"),
-          )),
-    );
+          child: const Scaffold(body: DAW()),
+        ));
   }
 }

@@ -1,6 +1,6 @@
 {
-    "name": "suite",
-    "short_name": "suite",
+    "name": "Suite 2",
+    "short_name": "Suite 1",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -32,6 +32,13 @@
   <title>suite</title>
   <link rel="manifest" href="manifest.json">
 </head>
+<script>
+  // Restore default browser context menu
+  document.addEventListener('contextmenu', function (event) {
+    // Let the browser handle it (don’t block)
+    event.stopPropagation();
+  }, true);
+</script>
 <body>
   <script src="flutter_bootstrap.js" async></script>
 </body>
